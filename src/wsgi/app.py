@@ -32,7 +32,7 @@ class App():
     def __call__(self, environ: dict, start_response):
         response_body = '404 NOT FOUND'
         status = '404 NOT FOUND'
-        parametrs = None
+        parametrs = {}
 
         path = environ.get('PATH_INFO','/')
         mask = re.compile(r'(<[A-Za-z]+>)')
@@ -46,21 +46,20 @@ class App():
             res = re.fullmatch(new_mask,path)
             if res:
 
-                parametrs = res.groupdict()
+                parametrs.update(res.groupdict())
                 handler = self.routes[request_method][route]
 
                 if request_method == 'POST':
                     content_length = int(environ.get('CONTENT_LENGTH',0))
                     request_body = environ['wsgi.input'].read(content_length).decode('utf-8')
-                    data = parse_qs(request_body)
-                    response_body = handler(data)
+                    parametrs.update(parse_qs(request_body))
                     
 
                 if query_string:
-                    response_body = handler(self.query_string_to_dict(query_string))
+                    parametrs.update(self.query_string_to_dict(query_string))
 
-                elif parametrs:
-                        response_body = handler(parametrs)
+                if parametrs:
+                        response_body = handler(**parametrs)
 
                 else:
                     response_body = handler()
