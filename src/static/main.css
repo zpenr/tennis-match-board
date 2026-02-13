@@ -27,3 +27,10 @@ button{
     border-radius: 8pt;
     border-color: yellow;
 }
+table{
+    border: 1pt solid black;
+    border-collapse: collapse;
+}
+th,td,tr{
+    border: 1pt solid black;
+}
