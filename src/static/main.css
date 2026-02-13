@@ -1,0 +1,29 @@
+*{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+body{
+    background-color: rgb(229, 241, 237);
+}
+h1{
+    text-align: center;
+}
+.main-buttons{
+    text-align: center;
+}
+@keyframes button-shuffle{
+    5%{
+        transform: scale(110%);
+    }
+    15%{
+        transform: scale(110%);
+        transform: rotate(5deg);
+    }
+}
+button:hover{
+    animation: button-shuffle 1s ease-in-out;
+}
+button{
+    background-color: transparent;
+    border-radius: 8pt;
+    border-color: yellow;
+}
