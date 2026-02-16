@@ -45,3 +45,10 @@ class Player():
             "is_match_win":self.is_match_win
         }
         return template
+    
+    def load_from_dict(self,dict: dict):
+        self.score = dict.get('score',0)
+        self.win_games = dict.get('win_games',0)
+        self.last_balls = dict.get('last_balls',0)
+        self.win_sets = dict.get('win_sets',0)
+        self.is_match_win = dict.get('is_match_win',False)
