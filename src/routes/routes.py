@@ -1,7 +1,10 @@
-from src.wsgi.app import App
+from src.wsgi.app import App, Redirect
 from ..render_templates import render_template
 from src.db.crud import insert_match, select_player_by_name, insert_player, select_match_by_uuid
 import uuid
+from src.score_logic.match import Match
+from src.score_logic.player import Player
+
 app = App()
 
 
@@ -11,11 +14,12 @@ def post():
 
 @app.route('/match-score')
 def test(uuid):
-    match = select_match_by_uuid(uuid)[0]
+    print(uuid.strip())
+    match = select_match_by_uuid(uuid)
     return render_template('match-score.html', name1 = match.Player1, name2 = match.Player2, score = match.Score)
 
 @app.route('/new-match')
-def create_match():
+def create_match(): 
     return render_template('create-match.html')
 
 @app.route('/new-match', request_method='POST')
@@ -27,9 +31,10 @@ def create_match(name1,name2):
     player_id1 = select_player_by_name(name1)[0]
     player_id2 = select_player_by_name(name2)[0]
 
-    insert_match(player_id1,player_id2,uuid.uuid4())
-
-    return render_template('create-match.html')
+    match_id = uuid.uuid4()
+    insert_match(player_id1,player_id2,match_id)
+    
+    return Redirect(f'/match-score?uuid={match_id}')
 
 
 @app.route('/static/main.css')
