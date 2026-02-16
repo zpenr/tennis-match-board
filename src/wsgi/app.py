@@ -1,6 +1,8 @@
 import re
 from urllib.parse import parse_qs
-
+class Redirect():
+    def __init__(self, redirect_link):
+        self.redirect_link = redirect_link
 class App():
     def __init__(self):
         self.routes = {
@@ -21,13 +23,11 @@ class App():
 
         return wrapper
     
-    def query_string_to_dict(self,query_string: str) -> dict:
-        parametrs_dict = dict()
-        parametrs = query_string.split('&')
-        for param in parametrs:
-            title_value = param.split('=$')
-            parametrs_dict[title_value[0]] = title_value[1]
-        return parametrs_dict
+    def _dict_values_to_elem(self, dict: dict)->dict:
+        redict = {}
+        for key in dict.keys():
+            redict[key] = dict[key][0]
+        return redict
     
     def __call__(self, environ: dict, start_response):
         response_body = '404 NOT FOUND'
@@ -42,7 +42,7 @@ class App():
 
         for route in self.routes[request_method]:
             
-            new_mask = re.sub(mask,r'(?P\1[^/]+)',route)
+            new_mask = re.sub(mask,r'(?P<\1>[^/]+)',route)
             res = re.fullmatch(new_mask,path)
             if res:
 
@@ -52,11 +52,11 @@ class App():
                 if request_method == 'POST':
                     content_length = int(environ.get('CONTENT_LENGTH',0))
                     request_body = environ['wsgi.input'].read(content_length).decode('utf-8')
-                    parametrs.update(parse_qs(request_body))
+                    parametrs.update(self._dict_values_to_elem(parse_qs(request_body)))
                     
 
                 if query_string:
-                    parametrs.update(self.query_string_to_dict(query_string))
+                    parametrs.update(self._dict_values_to_elem(parse_qs(query_string)))
 
                 if parametrs:
                         response_body = handler(**parametrs)
@@ -69,9 +69,12 @@ class App():
 
         if 'static' in path:
             headers = [('Content-Type', 'text/css')]
-        
         else:
             headers = [('Content-Type', 'text/html; charset=utf-8')]
+        if isinstance(response_body, Redirect):
+            status = '302 Redirect'
+            headers = [('Location', response_body.redirect_link)]
+            response_body = ''
         
         start_response(status, headers)
 
