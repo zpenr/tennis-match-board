@@ -1,5 +1,5 @@
 import json
-
+from src.score_logic.player import Player
 class Match():
 
     IN_PROGRESS = 'in process'
@@ -7,7 +7,7 @@ class Match():
     PLAYER1 = 'player1'
     PLAYER2 = 'player2'
 
-    def __init__(self,player1, player2):
+    def __init__(self,player1 = None, player2 = None):
         self.player1 = player1
         self.player2 = player2
         self.match_status = Match.IN_PROGRESS
@@ -37,7 +37,7 @@ class Match():
                     if scorer.is_match_win:
                         self.match_status = Match.FINISHED
 
-    def pitch(self,scorer_key: str):
+    def serve(self,scorer_key: str):
         if self.is_match_in_process:
             if scorer_key == Match.PLAYER1:
                 scorer = self.player1
@@ -53,11 +53,15 @@ class Match():
 
             self.update_match_progress(scorer, missed)
     
-    @property
-    def match_to_json(self):
+    def to_json(self):
         template = {
             Match.PLAYER1:self.player1.to_dict(),
             Match.PLAYER2:self.player2.to_dict(),
             'match_status': self.match_status
         }
         return json.dumps(template)
+    
+    def load_from_dict(self, dict:dict):
+        self.player1 = Player().load_from_dict(dict.get('player1'))
+        self.player2 = Player().load_from_dict(dict.get('player2'))
+        self.match_status = dict.get('match_status', Match.IN_PROGRESS)
