@@ -19,3 +19,6 @@ typing-inspection==0.4.2
 typing_extensions==4.15.0
 unicorn==2.1.4
 waitress==3.0.2
+psycopg_binary
+gunicorn
+gevent

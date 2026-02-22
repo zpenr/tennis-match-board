@@ -4,5 +4,5 @@ from src.db.crud import create_tables
 
 
 if __name__=='__main__':    
-    # create_tables()
-    serve(app, host = 'localhost', port = '8000')
+    create_tables()
+    serve(app, host = '0.0.0.0', port = '8000')
