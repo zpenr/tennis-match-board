@@ -16,8 +16,34 @@
         <tr>
             <td>{{name1}}</td>
             <td>{{name2}}</td>
-            <td>{{score}}</td>
+            <td>
+                <table>
+                <tr>
+                    <td>
+                        {% for key, value in player1.items() %}
+                            <p> {{key}} : {{value}}</p>
+                        {% endfor%}
+                    </td>
+                    <td>
+                        {% for key, value in player2.items() %}
+                            <p> {{key}} : {{value}}</p>
+                        {% endfor%}
+                    </td>
+                </tr>
+                </table>
+            </td>
         </tr>
     </table>
+    {% if mutable %}
+    <form action="" method="POST">
+        <input type="hidden" name = "scorer" value="player1"/>
+        <button type="submit"> Игрок1 забил выйграл подачу</button>
+    </form>
+
+    <form action="" method="POST">
+        <input type="hidden" name = "scorer" value="player2"/>
+        <button type="submit"> Игрок2 забил выйграл подачу</button>
+    </form>
+    {% endif %}
 </body>
 </html>

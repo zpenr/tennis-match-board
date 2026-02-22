@@ -6,13 +6,17 @@ class Player():
         self.win_sets: int = win_sets
         self.is_match_win: bool = is_match_win
 
-    def add_point(self):
+    def add_point(self, is_tiebreak=False):
+        if is_tiebreak:
+            self.score += 1
+            return
+        
         if self.score < 30: 
             self.score += 15 
         elif self.score == 30:
             self.score = 40
         elif self.score == 40:
-            self.last_balls +=1
+            self.last_balls += 1
     
     def reset_last_balls(self):
         self.last_balls = 0

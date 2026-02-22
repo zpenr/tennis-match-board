@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/main.css">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/matches" method="GET">
+        <label for="player_name">Имя игрока:</label>
+        <input type="text" 
+           id="player_name" 
+           name="filter_by_player_name" 
+           placeholder="Введите имя..."
+           {% if filter_by_player_name %}
+               value="{{filter_by_player_name}}" 
+           {% else %}
+               value=""
+           {% endif %}> 
+        <button type="submit">Искать</button>
+        <a href="/matches">Сбросить</a>
+    </form>
+    {% if is_found %}
+        <table>
+            {% for i in range(player1_names|length) %}
+            <tr>
+                <td>{{ player1_names[i] }}</td>
+                <td>{{ player2_names[i] }}</td>
+                <td>{{ winners[i] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+            <div class="no-matches">Матчей не найдено</div>
+    {% endif %}
+    <div class="slider">
+        {% if page > 1 %}
+        <form action="" method="GET">
+            <input type="hidden" name = "page" value="{{ page - 1}}"/>
+            {% if filter_by_player_name %}
+                <input type="hidden" name = "filter_by_player_name" value="{{ filter_by_player_name }}"/>
+            {% endif %}
+            <button type="submit"> ← </button>
+        </form>
+        {% endif %}
+            <p>{{page}} из {{pages_num}}</p>
+
+        {% if page < pages_num %}
+        <form action="" method="GET">
+            <input type="hidden" name = "page" value="{{ page + 1}}"/>
+            {% if filter_by_player_name %}
+                <input type="hidden" name = "filter_by_player_name" value="{{ filter_by_player_name }}"/>
+            {% endif %}
+            <button type="submit"> → </button>
+        </form>
+        {% endif %}
+    </div>
+</body>
+</html>

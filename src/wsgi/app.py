@@ -1,5 +1,7 @@
 import re
 from urllib.parse import parse_qs
+from src.errors_types import *
+from src.render_templates import render_template
 class Redirect():
     def __init__(self, redirect_link):
         self.redirect_link = redirect_link
@@ -57,7 +59,7 @@ class App():
 
                 if query_string:
                     parametrs.update(self._dict_values_to_elem(parse_qs(query_string)))
-
+                # try: 
                 if parametrs:
                         response_body = handler(**parametrs)
 
@@ -65,6 +67,12 @@ class App():
                     response_body = handler()
                 
                 status = '200 OK'
+                # except Errors as e:
+                #     status = e.status_code
+                #     response_body = render_template('error_page.html', code = e.code, message = e.message)
+                # except Exception as e:
+                #     status = '500 Internal Server Error'
+                #     response_body = render_template('error_page.html', code = 500, message = 'Сервер столкнулся с непредвиденной внутренней ошибкой')
                 break
 
         if 'static' in path:
