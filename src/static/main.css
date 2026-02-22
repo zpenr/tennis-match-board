@@ -1,4 +1,3 @@
-/* Общие настройки страницы */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f4f7f6;
@@ -16,7 +15,6 @@ h1 {
     margin-bottom: 30px;
 }
 
-/* Стилизация всех форм */
 form {
     background: white;
     padding: 20px;
@@ -44,7 +42,6 @@ input[type="text"]:focus {
     border-color: #3498db;
 }
 
-/* Кнопки */
 button, .main-buttons a {
     padding: 10px 20px;
     background-color: #3498db;
@@ -61,7 +58,6 @@ button:hover, .main-buttons a:hover {
     background-color: #2980b9;
 }
 
-/* Таблицы */
 table {
     width: 100%;
     max-width: 900px;
@@ -90,7 +86,6 @@ tr:hover {
     background-color: #f9f9f9;
 }
 
-/* Вложенная таблица счета */
 td table {
     box-shadow: none;
     margin: 0;
@@ -102,7 +97,6 @@ td table td {
     padding: 5px 15px;
 }
 
-/* Слайдер пагинации */
 .slider {
     display: flex;
     align-items: center;
@@ -122,13 +116,11 @@ td table td {
     color: #7f8c8d;
 }
 
-/* Главное меню */
 .main-buttons {
     display: flex;
     gap: 20px;
 }
 
-/* Кнопки "Игрок забил" в игровом интерфейсе */
 .mutable-controls {
     display: flex;
     gap: 10px;
@@ -147,7 +139,7 @@ td table td {
 .error-code {
     font-size: 72px;
     font-weight: bold;
-    color: #e74c3c; /* Красный цвет для ошибок */
+    color: #e74c3c;
     margin: 0;
 }
 .error-message {

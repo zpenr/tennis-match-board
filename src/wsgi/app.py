@@ -59,20 +59,20 @@ class App():
 
                 if query_string:
                     parametrs.update(self._dict_values_to_elem(parse_qs(query_string)))
-                # try: 
-                if parametrs:
-                        response_body = handler(**parametrs)
+                try: 
+                    if parametrs:
+                            response_body = handler(**parametrs)
 
-                else:
-                    response_body = handler()
-                
-                status = '200 OK'
-                # except Errors as e:
-                #     status = e.status_code
-                #     response_body = render_template('error_page.html', code = e.code, message = e.message)
-                # except Exception as e:
-                #     status = '500 Internal Server Error'
-                #     response_body = render_template('error_page.html', code = 500, message = 'Сервер столкнулся с непредвиденной внутренней ошибкой')
+                    else:
+                        response_body = handler()
+                    
+                    status = '200 OK'
+                except Errors as e:
+                    status = e.status_code
+                    response_body = render_template('error_page.html', code = e.code, message = e.message)
+                except Exception as e:
+                    status = '500 Internal Server Error'
+                    response_body = render_template('error_page.html', code = 500, message = 'Сервер столкнулся с непредвиденной внутренней ошибкой')
                 break
 
         if 'static' in path:

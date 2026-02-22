@@ -24,7 +24,7 @@
     {% if is_found %}
         <table>
             {% for i in range(player1_names|length) %}
-            <a href="/match-score?uuid=${{uuids[i]}}"></a><tr>
+            <a href="/match-score?uuid={{uuids[i]}}"></a><tr>
                 <td>{{ player1_names[i] }}</td>
                 <td>{{ player2_names[i] }}</td>
                 <td>{{ winners[i] }}</td>
