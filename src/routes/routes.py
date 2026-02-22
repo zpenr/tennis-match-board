@@ -37,9 +37,9 @@ def create_match_post(name1,name2):
 @app.route('/matches')
 def all_matches(page = 1, filter_by_player_name = None):
     
-    player1_names, player2_names, winners, pages_num, is_found = service.get_matches(page,filter_by_player_name)
+    player1_names, player2_names,uuids, winners, pages_num, is_found = service.get_matches(page,filter_by_player_name)
 
-    return render_template('all-matches.html', player1_names = player1_names, player2_names = player2_names, winners = winners, page = int(page), pages_num = pages_num, filter_by_player_name = filter_by_player_name, is_found = is_found)
+    return render_template('all-matches.html', player1_names = player1_names, player2_names = player2_names,uuids = uuids, winners = winners, page = int(page), pages_num = pages_num, filter_by_player_name = filter_by_player_name, is_found = is_found)
 
 @app.route('/static/main.css')
 def style():

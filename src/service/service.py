@@ -63,11 +63,13 @@ def get_matches(page = 1, filter_by_player_name = None):
 
     player1_names = list()
     player2_names = list()
+    uuids = list()
     winners = list()
 
     for match in table:
         player1_names.append(match.Player1.Name)
         player2_names.append(match.Player2.Name)
+        uuids.append(match.UUID)
         if match.Winner_id is None:
             winners.append('match in process')
 
@@ -77,4 +79,4 @@ def get_matches(page = 1, filter_by_player_name = None):
         is_found = True
     else:
         is_found = False
-    return player1_names, player2_names, winners, pages_num, is_found
+    return player1_names, player2_names,uuids, winners, pages_num, is_found
